@@ -18,9 +18,9 @@ Let's take for example, a typical React Application. When you clone the applicat
 These processes are kinda automated and bundled as a single image using the Dockerfile
 
 #### Syntax
-Depending on the type of application, you have to specify a base application. 
+Firstly, in the root of your application code, create a file and name it Dockerfile. No extension. 
 
-- Since this is react app, normally, you would need to download node on your computer. So the starting point for our dockerfile will be node
+- Depending on the type of application, you have to specify a base application. Since this is react app, normally, you would need to download node on your computer. So the starting point for our dockerfile will be node
 ```
 FROM node:node:18-alpine
 
@@ -35,5 +35,17 @@ FROM node:node:18-alpine
 
 WORKDIR /app
 # this set default working directory to /app
+
+```
+- Since the Dockerfile is in the root directory, you will want to move all the files in the root files into the WORKDIR that you've created. Same way you will clone your application into a specific directory if you are doing it locally on your computer (outside docker). You can create `` .dockerignore `` file to specify files that should be ignored by docker. Same way `` .gitignore `` works.
+```
+FROM node:node:18-alpine
+# this will pull a lighter version of node
+
+WORKDIR /app
+# this set default working directory to /app
+
+COPY . .
+# This copy everything in the directory where the Dockerfile is into the WORKDIR of the proposed container
 
 ```
