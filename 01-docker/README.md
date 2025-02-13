@@ -31,9 +31,8 @@ FROM node:node:18-alpine
 
 ```
 FROM node:node:18-alpine
-
 # this will pull a lighter version of node
 
 WORKDIR /app
-
+# this set default working directory to /app
 ```
