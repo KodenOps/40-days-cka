@@ -26,7 +26,7 @@ There will be an instance where we want to handle how the pods are being created
 How?
 
 - create a run-nginx-pod.yml
-- 
+- Edit the file using `` vi run-nginx-pod.yml `` and paste the content below
 ``` 
 
     # A K M S
