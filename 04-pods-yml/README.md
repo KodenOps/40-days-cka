@@ -1,9 +1,14 @@
 # INTRODUCTION TO PODS CREATION:
 ## What is a pod:
-Pod is the smallest deployable unit of kubernetes. Let's see pod a unit of a microservice that shares a particular task. For example, if you have an application (bank app) that have multiple loosely-coupled services (transfer, buy airtime, pay bills, etc). A service such as transfer can be on a single pod (called Transfer-pod), and others in  separate pods.
+A Pod is the smallest deployable unit in Kubernetes. Think of it as a bucket that holds one or more containers, allowing them to share the same network (IP), storage, and communicate seamlessly with each other. 
+
 
 ## Single container pod vs Multi-container pods
 Kindly note that pods can either be a single container or multi-container. As we know that there can be instances where the full functionality of a service will require one or two smaller services. A web server functionality can be served by a single container pod (nginx) while a log management pod might have multiple container that fetch and index log in order for it to perform the main task.
+
+So, let's pick ELK stack now. The rule of thumb for pods is that they should only group tightly coupled containers that must run together. For high availability, Elasticsearch nodes (es01, es02, es03) should run in separate pods to ensure better fault tolerance and scalability. Each node can have persistent storage attached, while Kibana should also run in a separate pod for UI-based log visualization.
+
+There are situations where two or more applications are tightly coupled, e.g. Nginx + Fluentd. Fluentd strongly depends on Nginx in the log management system. Nginx is a web server that send its logs to `` /var/log/nginx ``. Fluentd on the other hand is needed to pick the logs from nginx and send for log management. Both Nginx and Fluentd need to be on the same pod for this interaction to be successful.
 
 ## Imperative vs Declarative way of creating pods
 ### Imperative: 
@@ -15,9 +20,9 @@ Life is quite cool that we can create pods explicitly using built-in command and
 ``` kubectl run apache-kafka --image=apache/kafka:latest ```
 
 - Specifying port and namespace
-``` kubectl run <Name of Pod> --image=<Image name>:tag  namespace-Label --port=xxxx```  
+``` kubectl run <Name of Pod> --image=<Image name>:tag -n namespace-Label --port=xxxx```  
 
-``` kubectl run apache-kafka --image=apache/kafka:latest monitoring-namespace --port=9094```
+``` kubectl run apache-kafka --image=apache/kafka:latest -n monitoring-namespace --port=9094```
 
 Just specify minimal values and let the system handles the rest
 
@@ -46,4 +51,6 @@ spec:
 
  ```
 - run the creation command 
-`` kubectl create pod -f run-nginx-pod.yml ``
+`` kubectl apply -f run-nginx-pod.yml ``
+
+### NOTE: Pods should only group tightly coupled containers that must run together.
