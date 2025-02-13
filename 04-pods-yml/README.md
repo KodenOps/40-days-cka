@@ -53,4 +53,3 @@ spec:
 - run the creation command 
 `` kubectl apply -f run-nginx-pod.yml ``
 
-### NOTE: Pods should only group tightly coupled containers that must run together.
