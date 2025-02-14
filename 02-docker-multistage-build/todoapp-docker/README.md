@@ -1,1 +1,2 @@
-# A sample todo app in react
+## MULTI-STAGE BUILD OF DOCKER IMAGE
+One thing 

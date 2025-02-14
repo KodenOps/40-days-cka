@@ -1,130 +1,108 @@
-# DOCKER
-## How to dockerize an application and manage the image across environment via registry
-Consistency in the environment is paramount in software development. "It run on my system, it doesn't in production" is a quite popular scenerio in IT space. To mitigate this, the developer might have to imploy the use for a docker to create an image of the application. And this image is shared in an online registry for both test and production team to use. 
+# **DOCKER**
 
-This way, all the requirements needed to run the application are bundled in layers as the image using Dockerfile.
+## **How to Dockerize an Application and Manage Images Across Environments Using a Registry**
 
-### Dockerfile
-This is a file where commands and instructions for bunding the application is written. This is a simple file that tried to mimick what handler of the code may have to do on their computer and at the same time add all the dependencies as a layer in the image.
+Consistency in the environment is crucial in software development. A common issue developers face is:
 
-Let's take for example, a typical React Application. When you clone the application, 
-- You will first need to download node on your computer to be able to use npm package
-- you will save it in a folder. 
-- Then you will open it on a suitable code editor. 
-- Then open terminal. Navigate to the root directory of the folder
-- run `` npm install ``
-- Then you run it in Dev/Production mode using `` npm run dev `` to start the application.
+> *"It works on my system, but not in production!"*
 
-These processes are kinda automated and bundled as a single image using the Dockerfile
+To mitigate this, developers use **Docker** to create an image of the application. This image is then shared in a container registry, making it accessible for testing and production teams, ensuring consistency across environments.
 
-#### Syntax
-Firstly, in the root of your application code, create a file and name it Dockerfile. No extension. 
+---
 
-- Depending on the type of application, you have to specify a base application. Since this is react app, normally, you would need to download node on your computer. So the starting point for our dockerfile will be node
-```
-FROM node:node:18-alpine
+## **Dockerfile**
 
-# this will pull a lighter version of node
+A **Dockerfile** contains instructions to package an application and its dependencies into a Docker image. It automates the steps required to set up the environment.
 
-```
-- Next, you will need a folder for it to store and run. So, you will need to specify a WORKDIR (Work directory) where the docker will start working from. Note that the final stage of this dockerfile is to create an image which will be run to be a container. So, this WORKDIR is specifying the default directory for docker to place file. And by default, when you exec into the container, it will be in this folder.
+### **Example: Dockerizing a React Application**
 
-```
-FROM node:node:18-alpine
-# this will pull a lighter version of node
+When setting up a React app manually, you would typically:
+1. Install **Node.js** on your system.
+2. Clone the project into a folder.
+3. Open the project in a code editor.
+4. Navigate to the project’s root directory via the terminal.
+5. Run `npm install` to install dependencies.
+6. Start the development server using `npm run dev`.
 
+With **Docker**, these steps are automated and bundled into an image using a **Dockerfile**.
+
+---
+
+## **Writing a Dockerfile**
+
+1. **Create a `Dockerfile` in the root of your project (without an extension).**  
+2. **Specify a base image** (since we need Node.js for React):
+   
+   ```dockerfile
+   FROM node:18-alpine
+   ```
+   - This pulls a lightweight version of Node.js.
+
+3. **Set a working directory inside the container:**
+   
+   ```dockerfile
+   WORKDIR /app
+   ```
+   - This defines where files will be stored inside the container.
+
+4. **Copy project files into the container:**
+   
+   ```dockerfile
+   COPY . .
+   ```
+   - This moves everything from the current directory into `/app` in the container.
+   - Create a `.dockerignore` file to exclude unnecessary files (similar to `.gitignore`).
+
+5. **Install dependencies:**
+   
+   ```dockerfile
+   RUN npm install
+   ```
+
+6. **Define the command to start the application:**
+   
+   ```dockerfile
+   CMD ["npm", "run", "dev"]
+   ```
+
+7. **Expose the required port (React apps usually run on port 3000):**
+   
+   ```dockerfile
+   EXPOSE 3000
+   ```
+
+---
+
+## **Final Dockerfile**
+
+```dockerfile
+# Use a lightweight Node.js base image
+FROM node:18-alpine
+
+# Set the working directory inside the container
 WORKDIR /app
-# this set default working directory to /app
 
-```
-- Since the Dockerfile is in the root directory, you will want to move all the files in the root files into the WORKDIR that you've created. Same way you will clone your application into a specific directory if you are doing it locally on your computer (outside docker). You can create `` .dockerignore `` file to specify files that should be ignored by docker. Same way `` .gitignore `` works.
-```
-FROM node:node:18-alpine
-# this will pull a lighter version of node
-
-WORKDIR /app
-# this set default working directory to /app
-
+# Copy all project files into the container
 COPY . .
-# This copy everything in the directory where the Dockerfile is into the WORKDIR of the proposed container
 
-```
-
-- Now you need to run the `` npm install `` command to add the node modules
-
-```
-FROM node:node:18-alpine
-# this will pull a lighter version of node
-
-WORKDIR /app
-# this set default working directory to /app
-
-COPY . .
-# This copy everything in the directory where the Dockerfile is into the WORKDIR of the proposed container
-
+# Install dependencies
 RUN npm install
 
-```
-- Now, that everything is set, you will want to run `` npm run dev `` to start the development environment. 
-
-```
-FROM node:node:18-alpine
-# this will pull a lighter version of node
-
-WORKDIR /app
-# this set default working directory to /app
-
-COPY . .
-# This copy everything in the directory where the Dockerfile is into the WORKDIR of the proposed container
-
-RUN npm install
-
-CMD ["npm", "run", "dev"]
-
-```
-- One last thing, you want to ensure this runs on port 3000
-
-```
-FROM node:node:18-alpine
-# this will pull a lighter version of node
-
-WORKDIR /app
-# this set default working directory to /app
-
-COPY . .
-# This copy everything in the directory where the Dockerfile is into the WORKDIR of the proposed container
-
-RUN npm install
-
-```
-- Now, that everything is set, you will want to run `` npm run dev `` to start the development environment. 
-
-```
-FROM node:node:18-alpine
-# this will pull a lighter version of node
-
-WORKDIR /app
-# this set default working directory to /app
-
-COPY . .
-# This copy everything in the directory where the Dockerfile is into the WORKDIR of the proposed container
-
-RUN npm install
-
-CMD ["npm", "run", "dev"]
-
+# Expose the port the app will run on
 EXPOSE 3000
 
+# Start the application
+CMD ["npm", "run", "dev"]
 ```
 
-This is complete now. And you can proceed to build the image of your application.
+---
 
-### Build Docker Image
-After the completion of your Dockerfile, you can run the build command.
-<br/>
-`` docker build -t <NAME FOR IMAGE>:<LABEL/TAG> </PATH WHERE DOCKERFILE IS> ``
+## **Building the Docker Image**
 
-E.g.
-`` docker build -t my_image:latest . ``
+Once the `Dockerfile` is ready, build the image using:
 
-The . means the Dockerfile is in the same directory you are currently.
+```sh
+docker build -t my_image:latest .
+```
+
+- The `.` at the end means that the `Dockerfile` is in the current directory.
