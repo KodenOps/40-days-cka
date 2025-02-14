@@ -51,3 +51,79 @@ COPY . .
 ```
 
 - Now you need to run the `` npm install `` command to add the node modules
+
+```
+FROM node:node:18-alpine
+# this will pull a lighter version of node
+
+WORKDIR /app
+# this set default working directory to /app
+
+COPY . .
+# This copy everything in the directory where the Dockerfile is into the WORKDIR of the proposed container
+
+RUN npm install
+
+```
+- Now, that everything is set, you will want to run `` npm run dev `` to start the development environment. 
+
+```
+FROM node:node:18-alpine
+# this will pull a lighter version of node
+
+WORKDIR /app
+# this set default working directory to /app
+
+COPY . .
+# This copy everything in the directory where the Dockerfile is into the WORKDIR of the proposed container
+
+RUN npm install
+
+CMD ["npm", "run", "dev"]
+
+```
+- One last thing, you want to ensure this runs on port 3000
+
+```
+FROM node:node:18-alpine
+# this will pull a lighter version of node
+
+WORKDIR /app
+# this set default working directory to /app
+
+COPY . .
+# This copy everything in the directory where the Dockerfile is into the WORKDIR of the proposed container
+
+RUN npm install
+
+```
+- Now, that everything is set, you will want to run `` npm run dev `` to start the development environment. 
+
+```
+FROM node:node:18-alpine
+# this will pull a lighter version of node
+
+WORKDIR /app
+# this set default working directory to /app
+
+COPY . .
+# This copy everything in the directory where the Dockerfile is into the WORKDIR of the proposed container
+
+RUN npm install
+
+CMD ["npm", "run", "dev"]
+
+EXPOSE 3000
+
+```
+
+This is complete now. And you can proceed to build the image of your application.
+
+### Build Docker Image
+After the completion of your Dockerfile, you can run the build command 
+`` docker build -t <NAME FOR IMAGE>:<LABEL/TAG> </PATH WHERE DOCKERFILE IS> ``
+
+E.g.
+`` docker build -t my_image:latest . ``
+
+The . means the Dockerfile is in the same directory you are currently.
