@@ -94,6 +94,7 @@ EXPOSE 3000
 # Start the application
 CMD ["npm", "run", "dev"]
 ```
+So, the Dockerfile typically imitate the steps you would have taken if you are to clone the repo from Github up until you are able to run the application.
 
 ---
 
