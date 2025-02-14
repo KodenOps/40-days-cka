@@ -4,7 +4,7 @@ FROM node:18-alpine
 WORKDIR /app
 
 COPY . .
-
+# install all the application dependencies
 RUN apk add --no-cache python3 py3-pip make g++ sqlite-dev
 
 

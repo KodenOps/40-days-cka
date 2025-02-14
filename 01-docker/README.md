@@ -49,3 +49,5 @@ COPY . .
 # This copy everything in the directory where the Dockerfile is into the WORKDIR of the proposed container
 
 ```
+
+- Now you need to run the `` npm install `` command to add the node modules
