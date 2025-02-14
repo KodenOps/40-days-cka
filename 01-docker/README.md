@@ -120,7 +120,8 @@ EXPOSE 3000
 This is complete now. And you can proceed to build the image of your application.
 
 ### Build Docker Image
-After the completion of your Dockerfile, you can run the build command 
+After the completion of your Dockerfile, you can run the build command.
+<br/>
 `` docker build -t <NAME FOR IMAGE>:<LABEL/TAG> </PATH WHERE DOCKERFILE IS> ``
 
 E.g.
