@@ -9,12 +9,12 @@ Pods can either contain a **single container** or **multiple containers**. There
 - A **single-container pod** can be used to run a web server like **Nginx**.
 - A **multi-container pod** might be required for services that rely on helper containers, such as a log management pod that fetches and indexes logs.
 
-### Example: ELK Stack
+### Example of Single-container Pod: ELK Stack
 The **rule of thumb** is to group only **tightly coupled** containers that must run together.
 - **Elasticsearch nodes** (es01, es02, es03) should run in **separate pods** for high availability, fault tolerance, and scalability. Each node can have persistent storage attached.
 - **Kibana** should also run in a **separate pod** to provide UI-based log visualization.
 
-### Example: Nginx + Fluentd (Sidecar Pattern)
+### Example of Multi-Container Pod: Nginx + Fluentd (Sidecar Pattern)
 In a log management system, **Fluentd** depends on **Nginx** to collect logs:
 - Nginx logs are stored in `/var/log/nginx`.
 - Fluentd picks up these logs and forwards them to a log management system.
