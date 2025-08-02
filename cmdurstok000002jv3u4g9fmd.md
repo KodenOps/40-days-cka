@@ -2,8 +2,7 @@
 title: "Caching: Deliver Content Faster Than Bolt"
 seoTitle: "Caching: Deliver Content Faster Than Bolt"
 seoDescription: "What is even Caching?
-That is all what caching is all about. It’s just a process of storing frequently used data to prevent regeneration all over again
-"
+That is all what caching is all about. It’s just a process of storing frequently used data to prevent regeneration all over again"
 datePublished: Sat Aug 02 2025 21:34:20 GMT+0000 (Coordinated Universal Time)
 cuid: cmdurstok000002jv3u4g9fmd
 slug: caching-deliver-content-faster-than-bolt
