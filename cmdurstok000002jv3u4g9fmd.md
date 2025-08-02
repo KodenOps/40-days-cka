@@ -7,6 +7,7 @@ datePublished: Sat Aug 02 2025 21:34:20 GMT+0000 (Coordinated Universal Time)
 cuid: cmdurstok000002jv3u4g9fmd
 slug: caching-deliver-content-faster-than-bolt
 cover: https://cdn.hashnode.com/res/hashnode/image/stock/unsplash/zBLtU0zbJcU/upload/3ff2d89ad8e1779cb1b8f60e176cfa51.jpeg
+ogImage: https://cdn.hashnode.com/res/hashnode/image/upload/v1754171907083/8d6f8045-20a9-4921-8b90-9b34f4d542ea.webp
 tags: software-development, technology, backend, caching, devops, cache, system-design
 
 ---
